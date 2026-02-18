@@ -1,8 +1,8 @@
 streamlit
-pandas
-numpy
-scikit-learn
 matplotlib
 seaborn
 plotly
 wordcloud
+scikit-learn==1.3.2
+pandas==2.1.4
+numpy==1.26.4
