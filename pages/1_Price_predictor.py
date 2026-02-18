@@ -90,19 +90,17 @@
 #     except Exception as e:
 #         st.error(f"❌ Prediction failed: {e}")
 import streamlit as st
-import pickle
 import pandas as pd
 import numpy as np
+import joblib  # use joblib instead of pickle
 
 st.set_page_config(page_title="House Price Predictor", page_icon="🏠")
+st.title("🏡 House Price Prediction App")
 
-st.title("🏡 House Price Prediction")
-
-# ---------------- Load Model Only ----------------
+# ---------------- Load Model ----------------
 @st.cache_resource
 def load_model():
-    with open("pipeline.pkl", "rb") as f:
-        model = pickle.load(f)
+    model = joblib.load("pipeline.joblib")
     return model
 
 model = load_model()
@@ -122,7 +120,7 @@ floor_category = st.selectbox("Floor Category", ["Low Floor", "Mid Floor", "High
 property_age = st.selectbox("Property Age", ["New", "1-5 years", "5-10 years", "10+ years"])
 
 # ---------------- Prediction ----------------
-if st.button("Predict Price"):
+if st.button("💰 Predict Price"):
     try:
         input_data = pd.DataFrame([{
             'property_type': property_type,
@@ -139,13 +137,13 @@ if st.button("Predict Price"):
             'floor_category': floor_category
         }])
 
-        prediction = model.predict(input_data)[0]
-        price = np.expm1(prediction)
-
-        st.success(f"Estimated Price: ₹ {price:.2f} Cr")
-
+        pred = model.predict(input_data)[0]
+        price = np.expm1(pred)
+        st.success(f"🏠 Estimated Price: ₹ {price:.2f} Cr")
+        
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"❌ Prediction failed: {e}")
+
 
 
 
