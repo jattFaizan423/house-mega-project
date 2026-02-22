@@ -108,21 +108,36 @@ st.title("🏡 House Price Prediction App")
 st.markdown("Enter property details below to estimate the price range.")
 st.divider()
 
-# ------------------- Download Files from Google Drive -------------------
-def download_file(url, filename):
-    """Download a file from Google Drive."""
+# # ------------------- Download Files from Google Drive -------------------
+# def download_file(url, filename):
+#     """Download a file from Google Drive."""
+#     if not os.path.exists(filename):
+#         st.info(f"📥 Downloading {filename}...")
+#         r = requests.get(url)
+#         with open(filename, 'wb') as f:
+#             f.write(r.content)
+
+import gdown
+import os
+
+def download_file(file_id, filename):
     if not os.path.exists(filename):
-        st.info(f"📥 Downloading {filename}...")
-        r = requests.get(url)
-        with open(filename, 'wb') as f:
-            f.write(r.content)
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, filename, quiet=False)
 
-# Replace these with your own Google Drive 'file ID's
-DF_FILE_URL = "https://drive.google.com/file/d/1TSerQVXT9xWedrsI95vikwA_ojNTEqp3/view?usp=drive_link"
-PIPELINE_FILE_URL = "https://drive.google.com/file/d/1II2PMGg2hcudqrQNkmZMDoQ5CBKWIDRj/view?usp=drive_link"
 
-download_file(DF_FILE_URL, "df (1).pkl")
-download_file(PIPELINE_FILE_URL, "pipeline.pkl")
+DF_FILE_ID = "1TSerQVXT9xWedrsI95vikwA_ojNTEqp3"
+PIPELINE_FILE_ID = "1II2PMGg2hcudqrQNkmZMDoQ5CBKWIDRj"
+
+download_file(DF_FILE_ID, "df.pkl")
+download_file(PIPELINE_FILE_ID, "pipeline.pkl")
+
+# # Replace these with your own Google Drive 'file ID's
+# DF_FILE_URL = "https://drive.google.com/file/d/1TSerQVXT9xWedrsI95vikwA_ojNTEqp3/view?usp=drive_link"
+# PIPELINE_FILE_URL = "https://drive.google.com/file/d/1II2PMGg2hcudqrQNkmZMDoQ5CBKWIDRj/view?usp=drive_link"
+#
+# download_file(DF_FILE_URL, "df (1).pkl")
+# download_file(PIPELINE_FILE_URL, "pipeline.pkl")
 
 # ------------------- Load Data & Pipeline -------------------
 @st.cache_resource
@@ -193,6 +208,7 @@ if st.button('💰 Predict Price'):
 
     except Exception as e:
         st.error(f"❌ Prediction failed: {e}")
+
 
 
 
