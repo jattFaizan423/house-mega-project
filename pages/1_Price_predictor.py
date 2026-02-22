@@ -118,16 +118,16 @@ def download_file(url, filename):
             f.write(r.content)
 
 # Replace these with your own Google Drive 'file ID's
-DF_FILE_URL = "https://drive.google.com/uc?export=download&id=YOUR_DF_FILE_ID"
-PIPELINE_FILE_URL = "https://drive.google.com/uc?export=download&id=YOUR_PIPELINE_FILE_ID"
+DF_FILE_URL = "https://drive.google.com/file/d/1TSerQVXT9xWedrsI95vikwA_ojNTEqp3/view?usp=drive_link"
+PIPELINE_FILE_URL = "https://drive.google.com/file/d/1II2PMGg2hcudqrQNkmZMDoQ5CBKWIDRj/view?usp=drive_link"
 
-download_file(DF_FILE_URL, "df.pkl")
+download_file(DF_FILE_URL, "df (1).pkl")
 download_file(PIPELINE_FILE_URL, "pipeline.pkl")
 
 # ------------------- Load Data & Pipeline -------------------
 @st.cache_resource
 def load_files():
-    with open("df.pkl", "rb") as f:
+    with open("df (1).pkl", "rb") as f:
         df = pickle.load(f)
     with open("pipeline.pkl", "rb") as f:
         pipeline = pickle.load(f)
